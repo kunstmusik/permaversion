@@ -1,0 +1,30 @@
+{
+  "name": "permaversion",
+  "version": "1.0.0",
+  "description": "Version history for permaweb deployments",
+  "author": "Steven Yi <stevenyi@gmail.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "bin": {
+    "permaversion": "dist/index.js"
+  },
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js",
+    "start": "node dist/index.js",
+    "watch": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js --watch",
+    "dev": "npm run build && npm start",
+    "clean": "rimraf dist",
+    "test": "echo \"No tests specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.2.0",
+    "esbuild": "^0.23.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@ar.io/sdk": "^2.1.0",
+    "@ardrive/turbo-sdk": "^1.9.0",
+    "yargs": "^17.7.2"
+  }
+}

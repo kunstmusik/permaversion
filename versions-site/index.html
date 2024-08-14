@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <style>
+      * {
+        font-family: Arial, sans-serif;
+      }
+      body {
+        margin: 20px;
+      }
+      td {
+        padding: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Permaversion Test-App</h1>
+    <h2>Version History</h2>
+    <div id="versions"></div>
+  </body>
+  <script>
+    const loadVersions = async () => {
+      const data = await fetch("versions.json");
+      const json = await data.json();
+
+      const versionsDiv = document.querySelector("#versions");
+
+      json.versions.forEach((version) => {
+
+        const container = document.createElement("div");
+        const header = document.createElement("h3");
+        header.textContent = `${version.version}`;
+
+        const row = document.createElement("tr");
+        const dateCell = document.createElement("div");
+        const linkCell = document.createElement("div");
+        const dateString = new Date(version.timestamp)
+          .toLocaleString("en-CA", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+          })
+          .replace(/\//g, "-");
+        dateCell.textContent = `Release Date: ${dateString}`;
+        dateCell.style.paddingLeft = "2rem";
+
+        const link = document.createElement("a");
+        link.href = `https://arweave.net/${version.txId}`;
+        link.textContent = version.txId;
+        linkCell.textContent = "Transaction ID: ";
+        linkCell.appendChild(link);
+        linkCell.style.paddingLeft = "2rem";
+
+        container.appendChild(header);
+        container.appendChild(dateCell);
+        container.appendChild(linkCell);
+
+        versionsDiv.appendChild(container);
+      });
+    };
+    loadVersions();
+  </script>
+</html>
